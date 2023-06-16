@@ -15,7 +15,7 @@ namespace Json.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Json.Database.Entity.Author", b =>
@@ -25,7 +25,6 @@ namespace Json.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -43,11 +42,9 @@ namespace Json.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("Id1C")
@@ -57,7 +54,6 @@ namespace Json.Migrations
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -65,6 +61,26 @@ namespace Json.Migrations
                     b.HasIndex("AuthorID");
 
                     b.ToTable("books");
+                });
+
+            modelBuilder.Entity("Json.Database.Entity.HistoryFiles", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("import")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("historyFiles");
                 });
 
             modelBuilder.Entity("Json.Database.Entity.Library", b =>

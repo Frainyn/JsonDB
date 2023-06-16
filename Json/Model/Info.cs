@@ -11,5 +11,7 @@ public class Info
 {
     public List<BookModel>? Books { get; set; }
     public List<AuthorModel>? Authors { get; set; }
-    public List<Library> Libraries { get; set; }
+    public List<Library>? Libraries { get; set; }
+
+    public List<HistoryFiles>? HistoryFiles { get; set; }
 }

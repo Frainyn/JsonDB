@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 
 namespace Json.Service;
 
-public static class CRUD_Book
+public static class BookRepository
 {
 
     public static Book Add(BookModel model)
     {
+
+
 
         ConsoleAppDatabase consoleAppDatabase = new ConsoleAppDatabase();
 
@@ -25,13 +27,17 @@ public static class CRUD_Book
 
             res = model.ToEntity();
             consoleAppDatabase.Add(res);
-            consoleAppDatabase.SaveChanges();
-            Console.WriteLine($"--------- Данные {res.Title} добавлены ---------");
+            try
+            {
+                consoleAppDatabase.SaveChanges();
+            }
+            catch(Exception ex) { Console.WriteLine(ex); }
+
+            
+            Console.WriteLine($"- Запись \"{res.Title}\" добавлена");
         }
         else
         {
-            Console.WriteLine($"--------- Запись c именем {res.Title} уже создана ---------");
-
             ConsoleAppDatabase db = new ConsoleAppDatabase();
             UpdateDB(model);
         }
@@ -68,7 +74,7 @@ public static class CRUD_Book
             book.Category = model.Category;
             book.AuthorID = model.AuthorID;
             db.SaveChanges();
-            Console.WriteLine($"--------- Запись c именем {model.Title} обновлена ---------");
+            Console.WriteLine($"- Запись \"{model.Title}\" обновлена");
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Json.Service;
 
-public static class CRUD_Author
+public static class AuthorRepository
 {
 
     public static Author Add(AuthorModel model)
@@ -25,42 +25,24 @@ public static class CRUD_Author
             res = model.ToEntity();
             consoleAppDatabase.Add(res);
             consoleAppDatabase.SaveChanges();
-            Console.WriteLine($"--------- Данные {res.Name} добавлены ---------");
+            Console.WriteLine($"- Запись \"{res.Name}\" добавлена");
         }
         else
         {
-            Console.WriteLine($"--------- Запись c именем {res.Name} уже создана ---------");
             try
             {
                 ConsoleAppDatabase db = new ConsoleAppDatabase();
                 UpdateDB(model);
-
             }
             catch (Exception ex) { Console.WriteLine(ex); }
-
         }
         if (res == null)
         {
-            throw new Exception("");
+            throw new Exception("- Данных нет");
         }
 
         return res;
 
-        //res.Libraries = new();
-        //foreach (var book in books)
-        //{
-        //    var chek = consoleAppDatabase.libraries.FirstOrDefault(x => x.BookID == model.BookID);
-        //    var library = new Library()
-        //    {
-        //        Author = res,
-        //        Book = book
-        //    };
-        //    res.Libraries.Add(library);
-        //}
-
-        //consoleAppDatabase.SaveChanges();
-
-        //return res;
     }
 
 
@@ -80,6 +62,6 @@ public static class CRUD_Author
             author.Name = model.Name;
             db.SaveChanges();
         }
-        Console.WriteLine($"--------- Запись c именем {model.Name} обновлена ---------");
+        Console.WriteLine($"* Запись \"{model.Name}\" обновлена");
     }
 }

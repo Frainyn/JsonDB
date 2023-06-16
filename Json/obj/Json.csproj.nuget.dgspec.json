@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Developer\\_course\\OOP\\Json\\Json.csproj": {}
+    "C:\\Users\\Developer\\_course\\json_\\Json\\Json.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Developer\\_course\\OOP\\Json\\Json.csproj": {
+    "C:\\Users\\Developer\\_course\\json_\\Json\\Json.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Developer\\_course\\OOP\\Json\\Json.csproj",
+        "projectUniqueName": "C:\\Users\\Developer\\_course\\json_\\Json\\Json.csproj",
         "projectName": "Json",
-        "projectPath": "C:\\Users\\Developer\\_course\\OOP\\Json\\Json.csproj",
+        "projectPath": "C:\\Users\\Developer\\_course\\json_\\Json\\Json.csproj",
         "packagesPath": "C:\\Users\\Developer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Developer\\_course\\OOP\\Json\\obj\\",
+        "outputPath": "C:\\Users\\Developer\\_course\\json_\\Json\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Developer\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -44,7 +44,7 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.5, )"
+              "version": "[7.0.7, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
