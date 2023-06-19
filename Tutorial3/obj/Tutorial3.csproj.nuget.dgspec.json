@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Developer\\_course\\OOP\\Tutorial3\\Tutorial3.csproj": {}
+    "C:\\Users\\Developer\\_course\\json_\\Tutorial3\\Tutorial3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Developer\\_course\\OOP\\Tutorial3\\Tutorial3.csproj": {
+    "C:\\Users\\Developer\\_course\\json_\\Tutorial3\\Tutorial3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Developer\\_course\\OOP\\Tutorial3\\Tutorial3.csproj",
+        "projectUniqueName": "C:\\Users\\Developer\\_course\\json_\\Tutorial3\\Tutorial3.csproj",
         "projectName": "Tutorial3",
-        "projectPath": "C:\\Users\\Developer\\_course\\OOP\\Tutorial3\\Tutorial3.csproj",
+        "projectPath": "C:\\Users\\Developer\\_course\\json_\\Tutorial3\\Tutorial3.csproj",
         "packagesPath": "C:\\Users\\Developer\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Developer\\_course\\OOP\\Tutorial3\\obj\\",
+        "outputPath": "C:\\Users\\Developer\\_course\\json_\\Tutorial3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Developer\\AppData\\Roaming\\NuGet\\NuGet.Config",

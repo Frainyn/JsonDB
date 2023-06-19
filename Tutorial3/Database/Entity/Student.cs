@@ -10,5 +10,7 @@ public class Student
     public int Id { get; set; }
     public string? Name { get; set; }
     public List<Course> courses { get; set; } = new();
+    public List<Enrollment> enrollments { get; set; } = new();
+    
 }
 

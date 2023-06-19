@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yanAaiYAnMI4TBVqXvWh8D9QkxYSXxBIvj1VXmO+5oLrR6kxqdxVTdQq2+rdvMGXugscbDrcr9SAt9otKUFFiQ==",
+  "dgSpecHash": "RNo1JiE9Lstk4jrj2+DAdY3Z2mdyafEkIcGeVh3vNVajL609kRAtXyxMbiuVh9jFfn1cDoF6bNqvwG7fcltu4Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Developer\\_course\\OOP\\Tutorial2\\Tutorial2.csproj",
+  "projectFilePath": "C:\\Users\\Developer\\_course\\json_\\Tutorial2\\Tutorial2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Developer\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.2\\microsoft.entityframeworkcore.7.0.2.nupkg.sha512",
     "C:\\Users\\Developer\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.2\\microsoft.entityframeworkcore.abstractions.7.0.2.nupkg.sha512",

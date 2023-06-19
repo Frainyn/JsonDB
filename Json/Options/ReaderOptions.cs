@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Json.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,11 @@ namespace Json.Options;
 public class ReaderOptions
 {
     public string JsonFilesDirectory { get; set; }
-    public string ASDasda { get; set; }
+
+
+    //public ReaderOptions(FileReader _fileReader) 
+    //{
+    //    fileReader = _fileReader;
+    //}
+
 }

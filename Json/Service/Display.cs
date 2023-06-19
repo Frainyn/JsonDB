@@ -1,4 +1,5 @@
 ﻿using Json.Data;
+using Json.Options;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,12 @@ using System.Threading.Tasks;
 
 namespace Json.Service;
 
+
+
 public class Display
 {
-    private FileReader fileReader = new FileReader();
+
+    
 
     public void BookAuthor()
     {
@@ -29,9 +33,9 @@ public class Display
     //Список не импортируемых файлов
     public void NoImportFiles()
     {
-
+        
         Console.WriteLine("Список не импортируемых файлов:");
-        var file = fileReader.GetNotImportedFiles();
+        //var file = fileReader.GetNotImportedFiles();
         //foreach (var item in file)
         //{
         //    var pathf = fileReader.GetExchangeFilePath(item.Name);

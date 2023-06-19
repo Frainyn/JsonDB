@@ -718,11 +718,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Developer\\_course\\OOP\\Tutorial2\\Tutorial2.csproj",
+      "projectUniqueName": "C:\\Users\\Developer\\_course\\json_\\Tutorial2\\Tutorial2.csproj",
       "projectName": "Tutorial2",
-      "projectPath": "C:\\Users\\Developer\\_course\\OOP\\Tutorial2\\Tutorial2.csproj",
+      "projectPath": "C:\\Users\\Developer\\_course\\json_\\Tutorial2\\Tutorial2.csproj",
       "packagesPath": "C:\\Users\\Developer\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Developer\\_course\\OOP\\Tutorial2\\obj\\",
+      "outputPath": "C:\\Users\\Developer\\_course\\json_\\Tutorial2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Developer\\AppData\\Roaming\\NuGet\\NuGet.Config",
