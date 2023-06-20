@@ -1,8 +1,8 @@
 ﻿using Json.Data;
 using Json.Database;
 using Json.Database.Entity;
-using Json.Model;
 using Json.Options;
+using Json.Service;
 using Json.Service.DownloadExchangeJson;
 using Json.Service.JobConsole;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +38,9 @@ class Program
         FileReadedJson fileReadedJson = new FileReadedJson();
         DatabaseRefresher databaseRefresher = new DatabaseRefresher(db);
         FileCheckImport fileCheckImport = new FileCheckImport(db);
-        WorkConsole workConsole = new WorkConsole(db, databaseRefresher);
+        CRUD crud = new CRUD(db);
+        Print print = new Print(db);
+        WorkConsole workConsole = new WorkConsole(db, databaseRefresher, crud, print);
 
         
 

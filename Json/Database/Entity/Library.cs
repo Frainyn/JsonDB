@@ -14,5 +14,7 @@ public class Library
     public Author? Author { get; set; }
     public int BookID { get; set; }
     public Book? Book { get; set; }
+    public string? Preface { get; set; }
+
 
 }

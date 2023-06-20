@@ -1,6 +1,6 @@
 ﻿using Json.Data;
+using Json.Database;
 using Json.Database.Entity;
-using Json.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,19 +20,19 @@ public class DatabaseRefresher
         db = _db;
     }
 
-    private AuthorModel author = new AuthorModel();
-    private BookModel book = new BookModel();
+    private Author author = new Author();
+    private Book book = new Book();
     private Library library = new Library();
 
     public void DataRefresher(List<Info> obj, List<FileInfo> file)
     {
 
 
-
+        
         for (int i = 0; i < file.Count; i++)
         {
-
-            for (int j = 0; j < obj[i].Authors.Count; j++)
+            //Добавлние авторов
+            for (int j = 0; j < obj[i].Authors?.Count; j++)
             {
                 var authorModel = obj[i].Authors?[j];
                 var res = db.authors.FirstOrDefault(x => x.Id == authorModel.Id);
@@ -49,7 +49,7 @@ public class DatabaseRefresher
 
             }
 
-
+            //Добавление книг
             for (int j = 0; j < obj[i].Books?.Count; j++)
             {
                 var bookModel = obj[i].Books?[j];
@@ -71,6 +71,7 @@ public class DatabaseRefresher
                 }
             };
 
+            //Добавление библиотеки
             foreach (var book in obj[i].Books)
             {
                 var res = db.libraries.FirstOrDefault(x => x.Id == book.Id);
@@ -93,11 +94,8 @@ public class DatabaseRefresher
 
         
     }
-    public void DeleteBook(int record)
-    {
-        Book book = db.books.Where(x => x.Id1C == record).FirstOrDefault();
-        db.books.Remove(book);
-        db.SaveChanges();
-    }
+    
+
+
 
 }

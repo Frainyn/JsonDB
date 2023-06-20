@@ -1,5 +1,4 @@
 ﻿using Json.Database.Entity;
-using Json.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;

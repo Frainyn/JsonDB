@@ -1,14 +1,16 @@
 ﻿using Json.Data;
+using Json.Database;
 using Json.Database.Entity;
-using Json.Model;
 using Json.Service.DownloadExchangeJson;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Json.Service.JobConsole
 {
@@ -17,10 +19,14 @@ namespace Json.Service.JobConsole
 
         private ConsoleAppDatabase _db;
         private DatabaseRefresher _workDB;
-        internal WorkConsole(ConsoleAppDatabase db, DatabaseRefresher workDB)
+        private CRUD _CRUD;
+        private Print _print;
+        internal WorkConsole(ConsoleAppDatabase db, DatabaseRefresher workDB, CRUD crud, Print print)
         {
             _db = db;
             _workDB = workDB;
+            _CRUD = crud;
+            _print = print;
         }
         
 
@@ -31,7 +37,14 @@ namespace Json.Service.JobConsole
 
             while (isOpen) 
             {
-                
+
+                //Console.SetCursorPosition(10, 35);
+
+                //_print.Books();
+                //Console.WriteLine("");
+                //_print.Authors();
+
+                Console.SetCursorPosition(0, 0);
                 Console.WriteLine("Библиотека");
                 Console.WriteLine("\n1 - добавить книгу.\n2 - изменить книгу.\n3 - удалить книгу.\n4 - каталог.\n5 - выход.\n");
                 Console.Write("Введите команду: ");
@@ -39,49 +52,70 @@ namespace Json.Service.JobConsole
 
                 switch (Convert.ToInt32(Console.ReadLine()))
                 {
-                    case 1:
-                        List<Info> obj = new List<Info>();
-                        List<string> books = new List<string>();
-                        List<string> authors = new List<string>();
-                        
-                        Console.WriteLine("Добавьте книгу:");
-                        Console.Write("Название книги:");
-                        string title = Console.ReadLine();
-                        books.Add(title);
-                        Console.Write("Категория книги:");
-                        string Category = Console.ReadLine();
-                        books.Add(Category);
-                        Console.Write("Описание:");
-                        string Description = Console.ReadLine();
-                        books.Add(Description);
-                        Console.Write("Стоимость");
-                        string Price = Console.ReadLine();
-                        books.Add(Price);
-                        Console.Write("Автор");
-                        string AuthorID = Console.ReadLine();
-                        books.Add(AuthorID);
-
-                        obj.AddRange(books, authors);
-                        Console.WriteLine(obj);
-
-
+                    case 1:            
+                        Console.WriteLine("Добавление книги\n");
+                        var addBook = GetData();
+                        var addPreface = GetPreface();
+                        _CRUD.Create(addBook, addPreface);
+                        Console.WriteLine("Книга успешно добавлена");
                         break;
                     case 2:
-                        Console.WriteLine("Какую книгу вы хотите изменить? ");
-                        
+                        Console.WriteLine("Какую книгу вы хотите изменить? \n");
+                        int recordBook = Convert.ToInt32(Console.ReadLine());
+                        var insertBook = GetData();
+                        var insertPreface = GetPreface();
+                        _CRUD.Update(insertBook, recordBook, insertPreface);
+                        Console.WriteLine("Книга успешно изменена");
                         break;
                     case 3:
                         Console.WriteLine("Какую книгу вы хотите удалить? ");
                         int record = Convert.ToInt32(Console.ReadLine());
-                        if (_db.books.Count() >= record || record > 0)
+                        if (_db.books.Count() <= record || record < 0)
                         {
-                            _workDB.DeleteBook(record);
-                            Console.WriteLine("Книга успешно удалена !");
+                            Console.WriteLine("Такой книги нет");
+                            break;
                         }
-                        Console.WriteLine("Такой книги нет");
+                        var crud = _CRUD.Delete(record);
+                        if (crud == null)
+                        {
+                            Console.WriteLine("Ошибка с удалением книги");
+                        }
+                        else { Console.WriteLine($"Книга \"{crud.Title}\" удалена"); }
                         break;
                     case 4:
-                        Catalog();
+                        bool isWork = true;
+                        int filter = 0;
+                        while (isWork)
+                        {
+                            if (filter == 0)
+                            {
+                                _print.Catalog();
+                            }
+                            
+                            Console.WriteLine($"Отфильтровать по какому полю?\n" +
+                                $"1 - По имени автора\n" +
+                                $"2 - По наименованию книги\n" +
+                                $"3 - По предисловию\n" +
+                                $"4 - По всем\n");
+                            filter = Convert.ToInt32(Console.ReadLine());
+                            if (filter <= 3 && filter < 0)
+                            {
+                                isWork = false;
+                                break;
+                            }
+                            
+                            Console.WriteLine($"Наименование по фильтрации");
+                            string name = Console.ReadLine();
+                            if(name == null)
+                            {
+                                break;
+                            }
+                            Filter(filter, name);
+
+
+                        }
+                        
+                       
                         break;
                     case 5:
                         isOpen = false;
@@ -96,30 +130,102 @@ namespace Json.Service.JobConsole
 
         }
 
-         
 
-        
-
-
-        public void Catalog() 
+        public List<Book> GetData()
         {
-            Console.WriteLine("Библиотека");
-            var books = _db.books
-                    .Include(book => book.Author)
-                    .ToList();
+            var books = new List<Book>() { };
 
-            Console.WriteLine("\nК А Т А Л О Г");
-            foreach (var book in books)
+            Console.Write("Название книги: ");
+            string? title = Console.ReadLine();
+            Console.Write("Категория книги: ");
+            string? category = Console.ReadLine();
+            Console.Write("Описание: ");
+            string? description = Console.ReadLine();
+            Console.Write("Стоимость: ");
+            decimal price = Convert.ToDecimal(Console.ReadLine());
+            Console.Write("Выберите автора: ");
+            int authorID = Convert.ToInt32(Console.ReadLine());
+            var HasAuthor = _db.authors.FirstOrDefault(x => x.Id == authorID);
+            var HasBookAuthor = _db.books.Where(n => n.Title == title).FirstOrDefault(x => x.Id == authorID);
+            if (HasBookAuthor != null)
             {
-                Console.WriteLine($"ID - {book.Id1C}  |  Книга - \"{book.Title}\"   |  Автор - \"{book.Author?.Name}\"");
+                Console.WriteLine("Такая книга уже существует");
+                return books;
             }
+            if (HasAuthor == null)
+            {
+                Console.WriteLine("Такого автора нет");
+                return books;
+            }
+
+
+            books.Add(new Book() { Title = title, Category = category, Description = description, Price = price, AuthorID = authorID });
+            return books;
+        }
+
+        public Library GetPreface()
+        {
+            var libralis = new Library();
+            Console.Write("Предисловие автора: ");
+            string? preface = Console.ReadLine();
+            libralis.Preface = preface;
+
+            return libralis;
         }
 
 
-
-
-
-
-
+        
+        public void Filter(int get, string name)
+        {
+          
+            switch (get)
+            {
+                
+                case 1:
+                    var library = _db.libraries
+                        .Include(book => book.Book)
+                        .Include(author => author.Author)
+                        .ToList()
+                        .Where(x => x.Author?.Name == name);
+                    foreach (var lib in library)
+                    {
+                        Console.WriteLine($"Автор: {lib.Author?.Name}\n Книга: {lib.Book?.Title}\n Стоимость: {lib.Book?.Price}\n Предисловие: {lib.Preface}\n\n");
+                    }
+                    break;
+                case 2:
+                    library = _db.libraries
+                        .Include(book => book.Book)
+                        .Include(author => author.Author)
+                        .ToList()
+                        .Where(x => x.Book?.Title == name);
+                    foreach (var lib in library)
+                    {
+                        Console.WriteLine($"Автор: {lib.Author?.Name}\n Книга: {lib.Book?.Title}\n Стоимость: {lib.Book?.Price}\n Предисловие: {lib.Preface}\n\n");
+                    }
+                    break;
+                  case 3:
+                    library = _db.libraries
+                        .Include(book => book.Book)
+                        .Include(author => author.Author)
+                        .ToList()
+                        .Where(x => x.Preface == name);
+                    foreach (var lib in library)
+                    {
+                        Console.WriteLine($"Автор: {lib.Author?.Name}\n Книга: {lib.Book?.Title}\n Стоимость: {lib.Book?.Price}\n Предисловие: {lib.Preface}\n\n");
+                    }
+                    break;
+                case 4:
+                    library = _db.libraries
+                        .Include(book => book.Book)
+                        .Include(author => author.Author)
+                        .ToList()
+                        .Where(x => x.Author?.Name == name || x.Book?.Title == name || x.Preface == name);
+                    foreach (var lib in library)
+                    {
+                        Console.WriteLine($"Автор: {lib.Author?.Name}\n Книга: {lib.Book?.Title}\n Стоимость: {lib.Book?.Price}\n Предисловие: {lib.Preface}\n\n");
+                    }
+                    break;
+            }
+        }
     }
 }
